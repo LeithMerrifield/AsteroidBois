@@ -1,0 +1,51 @@
+
+Main Class
+Update Loop
+Draw Loop
+Current state
+Menu
+Game
+End
+
+Menu Class
+Buttons
+Title
+Background
+
+Game Class
+Score
+Ship
+Aliens
+Asteroids
+
+
+Asteroid
+Size - the bigger the size the more it can break down into smaller ones
+Speed
+Position
+Velocity
+Width / Height
+Images
+Size state
+Small
+Medium
+Large
+
+Ship
+Alive state
+Fire Rate
+Position / velocity
+Speed
+Image
+Current state
+Lives
+
+
+
+Alien
+Speed
+Position
+Velocity
+Fire Rate
+
+
