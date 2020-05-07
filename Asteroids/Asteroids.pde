@@ -12,6 +12,8 @@ void setup()
 
 void draw()
 {
+  background(0);
+  
   switch(gameState)
   {
     case PLAYING:
@@ -21,6 +23,8 @@ void draw()
       MenuLoop();
       break;
   }
+  
+  
 }
 
 void GameLoop()
