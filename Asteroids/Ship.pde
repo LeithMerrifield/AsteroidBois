@@ -1,12 +1,11 @@
 class Ship
 {
-  int m_health, projectileSize;
+  int m_health, fuel;
   PImage playerShip, playerShipThrust;
   PVector m_location, m_velocity, m_accelaration;
-  float m_rotation, m_rotation_speed, m_thrust_force, bullet_speed;
-  FloatList projectiley, projectileyspeed, projectilex, projectilexspeed;
+  float m_rotation, m_rotation_speed, m_thrust_force;
+  ArrayList<Projectile> m_bullets = new ArrayList<Projectile>();
 
-  
   Ship(int m_health)
   {
     playerShip= loadImage(dataPath("Textures\\Ship\\ShipIdle.png"));
@@ -19,12 +18,7 @@ class Ship
     m_rotation = 0;
     m_rotation_speed = 0.05;
     m_thrust_force = 0.07;
-    projectileSize = 3;
-    bullet_speed = 10;
-    projectiley = new FloatList();
-    projectileyspeed = new FloatList();
-    projectilex = new FloatList();
-    projectilexspeed = new FloatList();
+    fuel = 1000;
   }
   
   //A simple function to set the ships health
@@ -42,25 +36,25 @@ class Ship
       m_rotation += m_rotation_speed;
     }
     // accelarates the rocket in the direction its facing if w is held
-    if(W_held) {
+    if(W_held && fuel > 0) {
       m_accelaration.x = m_thrust_force*sin(m_rotation);
       m_accelaration.y = -m_thrust_force*cos(m_rotation);
+      fuel -= 1;
     } else {
       m_accelaration.x = 0;
       m_accelaration.y = 0;
     }
-    if(W_held && !thrusterSound.isPlaying()) {
+    
+    if(W_held && !thrusterSound.isPlaying() && fuel > 0) {
       thrusterSound.play();
     }
-    if(!W_held) {
+    if(!W_held || fuel == 0) {
       thrusterSound.stop();
     }
+    
     if(Space_held && !GunFire.isPlaying()) {
       GunFire.play();
-      projectilex.append(m_location.x);
-      projectilexspeed.append(bullet_speed*sin(m_rotation));
-      projectiley.append(m_location.y);
-      projectileyspeed.append(bullet_speed*-cos(m_rotation));
+      m_bullets.add(new Projectile(m_location.x,m_location.y,m_rotation));
     }
     // these loop the player around to the other side of the screen if they hit a side.
     if(abs(m_location.x) > (playerShip.width + width)/2) {
@@ -69,18 +63,33 @@ class Ship
     if(abs(m_location.y) > (playerShip.width + height)/2) {
       m_location.y = -m_location.y;
     }
+    
+    for(Projectile bullet : m_bullets)
+    {
+      bullet.OnUpdate();
+    }
+    
+    for(int i = 0; i < m_bullets.size(); i++)
+    {
+      Projectile bullet = m_bullets.get(i);
+      if((abs(bullet.m_position.x) > (playerShip.width + width) / 2) || (abs(bullet.m_position.y) > (playerShip.height + height) / 2))
+      {
+        m_bullets.remove(i);
+      }
+    }
   }
   
   void OnDraw() { // the pushing and popping of matrix allows it to rotate around the rocket.
     pushMatrix();
-    for(int i = 0; i < projectilex.size(); i++) { 
-        circle(projectilex.get(i)+width/2, projectiley.get(i)+height/2, projectileSize);
-        projectilex.add(i, projectilexspeed.get(i));
-        projectiley.add(i, projectileyspeed.get(i));
+
+    for(Projectile bullet : m_bullets)
+    {
+      bullet.OnDraw();
     }
+
     translate(m_location.x+width/2, m_location.y+height/2);
     rotate(m_rotation);
-    if(W_held) {
+    if(W_held && fuel > 0) {
       image(playerShipThrust, -playerShip.width/2, -playerShip.height/2);
     } else {
       image(playerShip, -playerShip.width/2, -playerShip.height/2);
@@ -88,5 +97,8 @@ class Ship
     popMatrix();
     m_velocity.add(m_accelaration);
     m_location.add(m_velocity);
+    fill(255- fuel*255/1000, fuel*255/1000, 0); 
+    rect(10, 10, fuel/2, 10);
+    fill(255,255,255);
   }
 }

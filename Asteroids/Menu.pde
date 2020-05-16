@@ -59,7 +59,6 @@ class Menu
          exit();
        break;
     }
-    
   }
     
   void changeSelection()
