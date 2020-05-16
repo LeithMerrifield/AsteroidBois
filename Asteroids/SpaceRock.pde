@@ -51,11 +51,11 @@ class Asteroid
   {
     if(m_position.x > width + m_asteroidImage.width) 
     {
-      m_position.x = 0 - m_asteroidImage.width; //<>// //<>// //<>// //<>//
+      m_position.x = 0 - m_asteroidImage.width; //<>//
     }
     if(m_position.y > height + m_asteroidImage.height) 
     {
-      m_position.y = 0 - m_asteroidImage.height; //<>// //<>// //<>// //<>//
+      m_position.y = 0 - m_asteroidImage.height; //<>//
     }
     if(m_position.y < 0 - m_asteroidImage.height) 
     {

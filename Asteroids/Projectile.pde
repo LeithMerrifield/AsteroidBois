@@ -22,7 +22,7 @@ class Projectile
   
   void OnDraw()
   {
-    circle(m_position.x + width / 2, m_position.x + height / 2, m_size);
+    circle(m_position.x + width / 2, m_position.y + height / 2, m_size);
   }
 }
   
