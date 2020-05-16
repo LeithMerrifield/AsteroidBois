@@ -14,7 +14,7 @@ Sound volume;
 
 IntList projectiley;
 IntList projectilex;
-boolean W_held, A_held, D_held, Space_held;
+boolean W_held, A_held, D_held, S_held, Space_held;
 
 void setup()
 {
@@ -24,6 +24,7 @@ void setup()
   menu = new Menu();
   W_held = false;
   A_held = false;
+  S_held = false;
   D_held = false; 
   Space_held = false;
   thrusterSound = new SoundFile(this, dataPath("Sounds\\rocket.wav"));
@@ -63,9 +64,19 @@ void keyPressed() {
     }
     if(key == 'w' || key == 'W') {
       W_held = true;
+      
+    }
+    if(key == 's' || key == 'S')
+    {
+      S_held = true;  
     }
     if(key == ' ') {
       Space_held = true;
+    }
+    if(key == ESC)
+    {
+      key = 0;
+      gameState = GAMESTATE.MENU;
     }
 }
 void keyReleased() {
@@ -77,6 +88,11 @@ void keyReleased() {
     }
     if(key == 'w' || key == 'W') {
       W_held = false;
+     
+    }
+    if(key =='s' || key =='S')
+    {
+      S_held = false;
     }
     if(key == ' ') {
       Space_held = false;
