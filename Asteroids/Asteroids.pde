@@ -18,8 +18,9 @@ boolean W_held, A_held, D_held, S_held, Space_held;
 
 void setup()
 {
-  //size(500,500);
+  //Fram.setResizable allows us to resize the screen later.
   fullScreen();
+  surface.setResizable(true);
   game = new Game();
   menu = new Menu();
   W_held = false;
@@ -37,12 +38,13 @@ void setup()
   volume = new Sound(this);
   projectiley = new IntList();
   projectilex = new IntList();
+  
+  volume.volume(0.1);
 }
 
 void draw()
 {
   background(0);
-  volume.volume(0.1);
   
   switch(gameState)
   {
@@ -116,5 +118,6 @@ enum GAMESTATE
   PLAYING,
   MENU
 }
+
 
  
