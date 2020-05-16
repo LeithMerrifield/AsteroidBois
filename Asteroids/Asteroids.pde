@@ -4,9 +4,17 @@ GAMESTATE gameState = GAMESTATE.PLAYING;
 Game game;
 Menu menu;
 SoundFile thrusterSound;
+SoundFile PlayerDie1;
+SoundFile PlayerDie2;
+SoundFile RockHit1;
+SoundFile RockHit2;
+SoundFile RockHit3;
+SoundFile GunFire;
 Sound volume;
- 
-boolean keyA, keyS, keyD, keyW;
+
+IntList projectiley;
+IntList projectilex;
+boolean W_held, A_held, D_held, Space_held;
 
 void setup()
 {
@@ -14,15 +22,21 @@ void setup()
   fullScreen();
   game = new Game();
   menu = new Menu();
-  keyA = false;
-  keyS = false;
-  keyD = false; 
-  keyW = false;
-  thrusterSound = new SoundFile(this, "rocket.wav");
+  W_held = false;
+  A_held = false;
+  D_held = false; 
+  Space_held = false;
+  thrusterSound = new SoundFile(this, dataPath("Sounds\\rocket.wav"));
+  RockHit1 = new SoundFile(this, dataPath("Sounds\\RockHit1.wav"));
+  RockHit2 = new SoundFile(this, dataPath("Sounds\\RockHit2.wav"));
+  RockHit3 = new SoundFile(this, dataPath("Sounds\\RockHit3.wav"));
+  PlayerDie1 = new SoundFile(this, dataPath("Sounds\\PlayerDie1.wav"));
+  PlayerDie2 = new SoundFile(this, dataPath("Sounds\\PlayerDie1.wav"));
+  GunFire = new SoundFile(this, dataPath("Sounds\\GunFire.wav"));
   volume = new Sound(this);
-  
+  projectiley = new IntList();
+  projectilex = new IntList();
 }
-
 
 void draw()
 {
@@ -39,50 +53,35 @@ void draw()
       break;
   }
 }
-  
-   void keyPressed() 
-  {
-    if(key== 'w')
-    {
-      keyW = true;
-      print('w');
-    }
-    if(key=='a')
-    {
-      keyA = true;
-    }
-    if(key=='d')
-    {
-      keyD = true;
-    }
-    if(key=='s')
-    {
-      keyS = true;
-    }
-  }
- 
-  void keyReleased() 
-  {
-    if(key== 'w')
-    {
-      keyW = false;
-    }
-    if(key=='a')
-    {
-      keyA = false;
-    }
-    if(key=='d')
-    {
-      keyD = false;
-    }
-    if(key=='s')
-    {
-      keyS = false;
-    }
-  }
-  
-  
 
+void keyPressed() {
+    if(key == 'a' || key == 'A') {
+      A_held = true;
+    }
+    if(key == 'd' || key == 'D') {
+      D_held = true;
+    }
+    if(key == 'w' || key == 'W') {
+      W_held = true;
+    }
+    if(key == ' ') {
+      Space_held = true;
+    }
+}
+void keyReleased() {
+    if(key == 'a' || key == 'A') {
+      A_held = false;
+    }
+    if(key == 'd' || key == 'D') {
+      D_held = false;
+    }
+    if(key == 'w' || key == 'W') {
+      W_held = false;
+    }
+    if(key == ' ') {
+      Space_held = false;
+    }
+}
 
 void GameLoop()
 {
