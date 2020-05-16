@@ -24,7 +24,7 @@ class Ship
   {
     m_health = newHealth;
   }
-
+  
   // changes the rotation and accelaration with key inputs.
   void OnUpdate() {
     if(A_held) { 

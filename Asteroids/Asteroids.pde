@@ -81,12 +81,6 @@ void keyReleased() {
     if(key == ' ') {
       Space_held = false;
     }
-    if(key == 'd' || key == 'D') {
-      D_held = true;
-    }
-    if(key == 'w' || key == 'W') {
-      W_held = true;
-    }
 }
 
 void GameLoop()
