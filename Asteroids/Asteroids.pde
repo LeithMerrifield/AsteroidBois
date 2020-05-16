@@ -11,15 +11,10 @@ SoundFile RockHit2;
 SoundFile RockHit3;
 SoundFile GunFire;
 Sound volume;
-<<<<<<< HEAD
 
 IntList projectiley;
 IntList projectilex;
 boolean W_held, A_held, D_held, Space_held;
-=======
- 
-boolean W_held, A_held, D_held;
->>>>>>> aed87260a47d54240eceb79afd3b6afbefcd6afa
 
 void setup()
 {
@@ -30,7 +25,6 @@ void setup()
   W_held = false;
   A_held = false;
   D_held = false; 
-<<<<<<< HEAD
   Space_held = false;
   thrusterSound = new SoundFile(this, dataPath("Sounds\\rocket.wav"));
   RockHit1 = new SoundFile(this, dataPath("Sounds\\RockHit1.wav"));
@@ -42,10 +36,6 @@ void setup()
   volume = new Sound(this);
   projectiley = new IntList();
   projectilex = new IntList();
-=======
-  thrusterSound = new SoundFile(this, "rocket.wav");
-  volume = new Sound(this);
->>>>>>> aed87260a47d54240eceb79afd3b6afbefcd6afa
 }
 
 void draw()
@@ -67,7 +57,6 @@ void draw()
 void keyPressed() {
     if(key == 'a' || key == 'A') {
       A_held = true;
-<<<<<<< HEAD
     }
     if(key == 'd' || key == 'D') {
       D_held = true;
@@ -91,25 +80,12 @@ void keyReleased() {
     }
     if(key == ' ') {
       Space_held = false;
-=======
     }
     if(key == 'd' || key == 'D') {
       D_held = true;
     }
     if(key == 'w' || key == 'W') {
       W_held = true;
-    }
-}
-void keyReleased() {
-    if(key == 'a' || key == 'A') {
-      A_held = false;
-    }
-    if(key == 'd' || key == 'D') {
-      D_held = false;
-    }
-    if(key == 'w' || key == 'W') {
-      W_held = false;
->>>>>>> aed87260a47d54240eceb79afd3b6afbefcd6afa
     }
 }
 
