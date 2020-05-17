@@ -19,7 +19,8 @@ boolean W_held, A_held, D_held, S_held, Space_held;
 void setup()
 {
   //Fram.setResizable allows us to resize the screen later.
-  fullScreen();
+  //fullScreen();
+  size(900,900);
   surface.setResizable(true);
   game = new Game();
   menu = new Menu();

@@ -35,6 +35,7 @@ class Ship
     if(D_held) { 
       m_rotation += m_rotation_speed;
     }
+    
     // accelarates the rocket in the direction its facing if w is held
     if(W_held && fuel > 0) {
       m_accelaration.x = m_thrust_force*sin(m_rotation);

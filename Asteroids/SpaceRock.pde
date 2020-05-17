@@ -51,11 +51,11 @@ class Asteroid
   {
     if(m_position.x > width + m_asteroidImage.width) 
     {
-      m_position.x = 0 - m_asteroidImage.width; //<>//
+      m_position.x = 0 - m_asteroidImage.width;
     }
     if(m_position.y > height + m_asteroidImage.height) 
     {
-      m_position.y = 0 - m_asteroidImage.height; //<>//
+      m_position.y = 0 - m_asteroidImage.height;
     }
     if(m_position.y < 0 - m_asteroidImage.height) 
     {
@@ -124,8 +124,17 @@ class Asteroid
     m_direction.normalize();
   }
   
-  void CheckCollision()
+  void CheckBulletCollision(ArrayList<Projectile> bulletList)
   {
-    
+    for(Projectile bullet : bulletList)
+    {
+      if(bullet.m_position.x < m_position.x + m_asteroidImage.width && //<>//
+         bullet.m_position.x + bullet.m_size > m_position.x &&
+         bullet.m_position.y < m_position.y + m_asteroidImage.height &&
+         bullet.m_position.y + bullet.m_size > m_position.y)
+         {
+           println("ye");
+         }
+    }
   }
 }

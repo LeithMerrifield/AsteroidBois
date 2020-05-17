@@ -21,6 +21,7 @@ class Game
     for(Asteroid rock : asteroidList)
     {
       rock.OnUpdate();
+      rock.CheckBulletCollision(player.m_bullets);
     }
   }
   
