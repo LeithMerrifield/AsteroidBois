@@ -22,6 +22,12 @@ class Game
     {
       rock.OnUpdate();
       rock.CheckBulletCollision(player.m_bullets);
+      if(rock.m_position.x + rock.m_asteroidImage.width > (player.m_location.x + width/2) &&
+      rock.m_position.x - rock.m_asteroidImage.width < (player.m_location.x + width/2 -player.playerShip.width/2) &&
+      rock.m_position.y + rock.m_asteroidImage.height > (player.m_location.y + height/2) &&
+      rock.m_position.y - rock.m_asteroidImage.height < (player.m_location.y + width/2 -player.playerShip.width/2)) {
+        println("DEAD");
+      }
     }
   }
   

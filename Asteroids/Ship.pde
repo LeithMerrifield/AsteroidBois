@@ -75,6 +75,9 @@ class Ship
       Projectile bullet = m_bullets.get(i);
       if((abs(bullet.m_position.x) > (playerShip.width + width) / 2) || (abs(bullet.m_position.y) > (playerShip.height + height) / 2))
       {
+        bullet.m_flagToDestroy = true;
+      }
+      if(bullet.m_flagToDestroy) {
         m_bullets.remove(i);
       }
     }
@@ -82,12 +85,10 @@ class Ship
   
   void OnDraw() { // the pushing and popping of matrix allows it to rotate around the rocket.
     pushMatrix();
-
     for(Projectile bullet : m_bullets)
     {
       bullet.OnDraw();
     }
-
     translate(m_location.x+width/2, m_location.y+height/2);
     rotate(m_rotation);
     if(W_held && fuel > 0) {

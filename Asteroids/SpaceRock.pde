@@ -3,6 +3,7 @@ class Asteroid
   int m_minSize = 50;
   int m_maxSize = 100;
   int m_spawnOffset = 50;
+  int score = 0;
   
   PVector m_position = new PVector();
   PVector m_direction = new PVector();
@@ -45,23 +46,24 @@ class Asteroid
   {    
     fill(255);
     image(m_asteroidImage,m_position.x,m_position.y);
+    text("Score: " + str(score), width - 350, 50);
   }
   
   void ScreenWrap()
   {
     if(m_position.x > width + m_asteroidImage.width) 
     {
-      m_position.x = 0 - m_asteroidImage.width;
+      m_position.x = -m_asteroidImage.width;
     }
     if(m_position.y > height + m_asteroidImage.height) 
     {
-      m_position.y = 0 - m_asteroidImage.height;
+      m_position.y = -m_asteroidImage.height;
     }
-    if(m_position.y < 0 - m_asteroidImage.height) 
+    if(m_position.y < -m_asteroidImage.height) 
     {
       m_position.y = height + m_asteroidImage.height;
     }
-    if(m_position.x < 0 - m_asteroidImage.width) 
+    if(m_position.x < -m_asteroidImage.width) 
     {
       m_position.x = width + m_asteroidImage.width;
     }
@@ -128,12 +130,13 @@ class Asteroid
   {
     for(Projectile bullet : bulletList)
     {
-      if(bullet.m_position.x < m_position.x + m_asteroidImage.width && //<>//
-         bullet.m_position.x + bullet.m_size > m_position.x &&
-         bullet.m_position.y < m_position.y + m_asteroidImage.height &&
-         bullet.m_position.y + bullet.m_size > m_position.y)
+      if(bullet.m_position.x + width/2 < m_position.x + m_asteroidImage.width && //<>//
+         bullet.m_position.x + width/2 + bullet.m_size > m_position.x &&
+         bullet.m_position.y + height/2 < m_position.y + m_asteroidImage.height &&
+         bullet.m_position.y + height/2 + bullet.m_size > m_position.y)
          {
-           println("ye");
+           bullet.m_flagToDestroy = true;
+           score += 1;
          }
     }
   }

@@ -20,6 +20,7 @@ void setup()
 {
   //Fram.setResizable allows us to resize the screen later.
   //fullScreen();
+  textSize(50);
   size(900,900);
   surface.setResizable(true);
   game = new Game();
