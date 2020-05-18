@@ -1,7 +1,7 @@
 class Menu
 {
   
-  int selected, menuState;
+  int selected, menuState, keyDelayTime;
   //StringList mainMenu, screenMenu;
   
   Menu()
@@ -10,17 +10,23 @@ class Menu
     selected = 0;  
     //MenuState is used to swap between inbuilt menus
     menuState = 0;
+    //keyDelayTime is the delay between keypresses
+    keyDelayTime = 75;
  
   }
   
   void OnUpdate()
   {
-    if(W_held || S_held || Space_held)
+    if(W_held || S_held)
       changeSelection();
   }
   
   void OnDraw()
   {
+    fill(255);
+    textSize(60);
+    text("ASTEROIDS", width/2, height*0.2);
+    
     switch(menuState)
     { 
       case 0:
@@ -30,10 +36,14 @@ class Menu
       case 1:
         drawScreenMenu();
         selectScreenItem(selected);
-      break;
+        break;
       case 2:
         drawVolumeMenu();
         selectVolumeItem(selected);
+        break;
+      case 3:
+      drawCredits();
+    
     }
   }
   
@@ -46,13 +56,15 @@ class Menu
       text("Resume", width/2, height*0.4);
       text("Screen Size", width/2, height*0.5);
       text("Volume", width/2, height*0.6);
-      text("Exit", width/2, height*0.7);
+      text("Credits", width/2, height*0.7);
+      text("Exit", width/2, height*0.8);
   }
   
-   //This function shows which menu item is selected and processes 
+   //This function shows which menu item is selected and processes its selection
   void selectMainItem(int i)
   {
-    switch(abs(i%4))
+    
+    switch(abs(i)%5)
     {
       case 0:
         fill(255,255,0);
@@ -60,6 +72,7 @@ class Menu
         flashRectangle(0.4);
        if(Space_held)
          gameState = GAMESTATE.PLAYING;
+       delay(keyDelayTime);
        break;
   
       case 1:
@@ -71,7 +84,7 @@ class Menu
          menuState = 1;
          selected = 0;  
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
        
       case 2:
@@ -83,18 +96,27 @@ class Menu
           menuState = 2;
           selected = 0;
         }
-        delay(100);
+        delay(keyDelayTime);
         break;
-       
-      case 3:
-
+      
+       case 3:
        fill(255,255,0);
-       text("Exit", width/2, height*0.7);
+       text("Credits", width/2, height*0.7);
        flashRectangle(0.7);
        if(Space_held)
-         exit();
-       break;
+         menuState = 3;
+       delay(keyDelayTime);
+       break;    
        
+      case 4:
+
+       fill(255,255,0);
+       text("Exit", width/2, height*0.8);
+       flashRectangle(0.8);
+       if(Space_held)
+         exit();
+       delay(keyDelayTime);
+       break;   
     }
   }
   
@@ -106,12 +128,14 @@ class Menu
       textSize(30);
       text("Back", width/2, height*0.4);
       text("500,500", width/2, height*0.5);
-      text("Full Screen", width/2, height*0.6);
+      text("750,750", width/2, height*0.6);
+      text("1000,1000", width/2, height*0.7);
+      text("Full Screen", width/2, height*0.8);
   }
   
   void selectScreenItem(int i)
   {
-    switch(abs(i%3))
+    switch(abs(i)%5)
     {
       case 0:
         fill(255,255,0);
@@ -122,7 +146,7 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
   
       case 1:
@@ -136,13 +160,41 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
        
-      case 2:
+       case 2:
        fill(255,255,0);
-       text("FullScreen", width/2, height*0.6);
+       text("750,750", width/2, height*0.6);
        flashRectangle(0.6);
+       if(Space_held)
+       {
+         surface.setSize(750,750);
+         surface.setLocation(displayWidth/2-width/2, displayHeight/2-height/2);
+         menuState = 0;
+         selected = 0;
+       }
+       delay(keyDelayTime);
+       break;
+       
+       case 3:
+       fill(255,255,0);
+       text("1000,1000", width/2, height*0.7);
+       flashRectangle(0.7);
+       if(Space_held)
+       {
+         surface.setSize(1000,1000);
+         surface.setLocation(displayWidth/2-width/2, displayHeight/2-height/2);
+         menuState = 0;
+         selected = 0;
+       }
+       delay(keyDelayTime);
+       break;
+       
+      case 4:
+       fill(255,255,0);
+       text("Full Screen", width/2, height*0.8);
+       flashRectangle(0.8);
        if(Space_held)
        {
          surface.setSize(displayWidth, displayHeight);
@@ -150,8 +202,10 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
+       
+       
     }
   }
   
@@ -170,7 +224,7 @@ class Menu
   
   void selectVolumeItem(int i)
   {
-    switch(abs(i%5))
+    switch(abs(i)%5)
     {
       case 0:
         fill(255,255,0);
@@ -181,7 +235,7 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
   
       case 1:
@@ -194,7 +248,7 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
        
       case 2:
@@ -207,7 +261,7 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
        
        case 3:
@@ -220,7 +274,7 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
        
        case 4:
@@ -233,38 +287,63 @@ class Menu
          menuState = 0;
          selected = 0;
        }
-       delay(100);
+       delay(keyDelayTime);
        break;
     }
   }
   
- 
+  void drawCredits()
+  {
+    textSize(30);
     
-  void changeSelection()
+    text("Asteoids Game Created By:",width/2, height*0.4);
+    text("Leith Merrifield", width/2, height*0.5);
+    text("Nat Edmonds", width/2, height*0.6);
+    text("Harrison Liddell", width/2, height*0.7);
+    fill(255,255,0);
+    text("Back", width/2, height*0.8);
+    flashRectangle(0.8);
+    if(Space_held == true)
+    { 
+      menuState = 0;
+      selected = 0;
+     }
+  }
+  
+ 
+ //This function is used to change what the menyu is currently hgihlighting
+ void changeSelection()
   {
     if(W_held)
     {
-    selected-=1;
-    delay(100);
+      if(selected == 0)
+        selected = 5;
+        
+      selected-=1;
+        
+    print(selected);
     return;
     }
     
     else if(S_held)
     {
-    selected+=1;
-    delay(100);
+        selected+=1;
     print(selected);
     return;
     }
   }
   
+  
+  //This function creates a rectangular box around the height its given (i)
   void flashRectangle(float i)
   {
-    if(millis()%1000 <= 500)
+    if(millis()%250 <= 125)
         {
           rectMode(CENTER);
-          fill(255,20);
+          fill(255,0);
           rect(width/2,height*i,200,60);
+          fill(255,0);
+          rect(width/2, height*i,195,55);
         }
   }
 

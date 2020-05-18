@@ -12,6 +12,7 @@ SoundFile RockHit3;
 SoundFile GunFire;
 Sound volume;
 
+
 IntList projectiley;
 IntList projectilex;
 boolean W_held, A_held, D_held, S_held, Space_held;
@@ -103,6 +104,7 @@ void keyReleased() {
     if(key =='s' || key =='S')
     {
       S_held = false;
+      
     }
     if(key == ' ') {
       Space_held = false;
