@@ -15,6 +15,7 @@ Sound volume;
 IntList projectiley;
 IntList projectilex;
 boolean W_held, A_held, D_held, S_held, Space_held;
+boolean asteroidHitBox = false;
 
 void setup()
 {
@@ -81,6 +82,11 @@ void keyPressed() {
     {
       key = 0;
       gameState = GAMESTATE.MENU;
+    }
+    
+    if(keyCode == java.awt.event.KeyEvent.VK_F1)
+    {
+      asteroidHitBox = !asteroidHitBox;
     }
 }
 void keyReleased() {

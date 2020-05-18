@@ -3,15 +3,16 @@ class Asteroid
   int m_minSize = 50;
   int m_maxSize = 100;
   int m_spawnOffset = 50;
-  int score = 0;
   
   PVector m_position = new PVector();
   PVector m_direction = new PVector();
   PVector m_velocity = new PVector();
   
   boolean m_wrapRock = false;
-  float m_speed = .8f;
+  float m_speed = .6f;
   PImage m_asteroidImage;
+  boolean m_flagToDestroy = false;
+  boolean m_isPlayerOn = false;
   
   public Asteroid()
   {
@@ -26,6 +27,15 @@ class Asteroid
     m_asteroidImage = newRock;
     SetRandomSpawn();
     GetDirection();
+  }
+  
+  public Asteroid(float speed, int size, PImage image,PVector position)
+  {
+    m_asteroidImage = new PImage(image.getImage());
+    m_position = new PVector(position.x,position.y);
+    m_asteroidImage.resize(size,size);
+    m_speed = speed;
+    RandomDirection();
   }
   
   void OnUpdate()
@@ -44,9 +54,21 @@ class Asteroid
 
   void OnDraw()
   {    
-    fill(255);
     image(m_asteroidImage,m_position.x,m_position.y);
-    text("Score: " + str(score), width - 350, 50);
+    stroke(255);
+    
+    if(asteroidHitBox)
+    {
+      line(m_position.x,m_position.y,m_position.x + m_asteroidImage.width,m_position.y); //<>//
+      line(m_position.x + m_asteroidImage.width,m_position.y,m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height);
+      line(m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height,m_position.x,m_position.y + m_asteroidImage.height);
+      line(m_position.x,m_position.y + m_asteroidImage.height,m_position.x,m_position.y);
+    }
+  }
+  
+  void RockSplit()
+  {
+    
   }
   
   void ScreenWrap()
@@ -126,18 +148,27 @@ class Asteroid
     m_direction.normalize();
   }
   
-  void CheckBulletCollision(ArrayList<Projectile> bulletList)
+  void RandomDirection()
+  {
+    m_direction.x = random(0,width);
+    m_direction.y = random(0,height);
+    m_direction = PVector.sub(m_direction,m_position);
+    m_direction.normalize();
+  }
+  
+  boolean CheckBulletCollision(ArrayList<Projectile> bulletList)
   {
     for(Projectile bullet : bulletList)
     {
-      if(bullet.m_position.x + width/2 < m_position.x + m_asteroidImage.width && //<>//
+      if(bullet.m_position.x + width/2 < m_position.x + m_asteroidImage.width &&
          bullet.m_position.x + width/2 + bullet.m_size > m_position.x &&
          bullet.m_position.y + height/2 < m_position.y + m_asteroidImage.height &&
          bullet.m_position.y + height/2 + bullet.m_size > m_position.y)
          {
            bullet.m_flagToDestroy = true;
-           score += 1;
+           return true;
          }
     }
+    return false;
   }
 }

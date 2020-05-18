@@ -1,12 +1,13 @@
 class Ship
 {
-  int m_health, fuel;
+  int m_currentHealth, m_maxHealth;
+  int fuel;
   PImage playerShip, playerShipThrust;
   PVector m_location, m_velocity, m_accelaration;
   float m_rotation, m_rotation_speed, m_thrust_force;
   ArrayList<Projectile> m_bullets = new ArrayList<Projectile>();
 
-  Ship(int m_health)
+  Ship(int health)
   {
     playerShip= loadImage(dataPath("Textures\\Ship\\ShipIdle.png"));
     playerShipThrust = loadImage(dataPath("Textures\\Ship\\ShipFull.png"));
@@ -19,12 +20,8 @@ class Ship
     m_rotation_speed = 0.05;
     m_thrust_force = 0.07;
     fuel = 1000;
-  }
-  
-  //A simple function to set the ships health
-  void SetHealth(int newHealth)
-  {
-    m_health = newHealth;
+    m_currentHealth = health;
+    m_maxHealth = health;
   }
   
   // changes the rotation and accelaration with key inputs.
@@ -96,7 +93,17 @@ class Ship
     } else {
       image(playerShip, -playerShip.width/2, -playerShip.height/2);
     }
+
+    /*
+    // should be the bounds of the ship
+    line(m_location.x - playerShip.width / 2 ,m_location.y - playerShip.height / 2 ,m_location.x + playerShip.width / 2, m_location.y - playerShip.height / 2);
+    line(m_location.x + playerShip.width / 2 ,m_location.y - playerShip.height / 2 ,m_location.x + playerShip.width / 2, m_location.y + playerShip.height / 2);
+    line(m_location.x + playerShip.width / 2 ,m_location.y + playerShip.height / 2 ,m_location.x - playerShip.width / 2, m_location.y + playerShip.height / 2);
+    line(m_location.x - playerShip.width / 2 ,m_location.y + playerShip.height / 2 ,m_location.x - playerShip.width / 2, m_location.y - playerShip.height / 2);
+    */
+
     popMatrix();
+    
     m_velocity.add(m_accelaration);
     m_location.add(m_velocity);
     fill(255- fuel*255/1000, fuel*255/1000, 0); 
