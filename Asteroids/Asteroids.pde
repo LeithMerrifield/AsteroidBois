@@ -15,7 +15,7 @@ Sound volume;
 IntList projectiley;
 IntList projectilex;
 boolean W_held, A_held, D_held, S_held, Space_held;
-boolean asteroidHitBox = false;
+boolean debugLines = false;
 
 void setup()
 {
@@ -86,7 +86,7 @@ void keyPressed() {
     
     if(keyCode == java.awt.event.KeyEvent.VK_F1)
     {
-      asteroidHitBox = !asteroidHitBox;
+      debugLines = !debugLines;
     }
 }
 void keyReleased() {

@@ -11,28 +11,37 @@ class Game
   PImage heartInactive;
   int heartSize = 50;
   
-  float hitCooldown = 2f;
-  float timeOnHit = 0f;
   boolean beenHit = false;
   
+  int currentWave = 1;
+  int asteroidsPerWave = 5;
+  float splashCooldown = 2f;
+  float timeOnSplash = 0f;
+  boolean splashEnabled = false;
+  boolean startWave = false;
+
   Game() 
   {
     heartActive = loadImage(dataPath("Lives\\HeartActive.png"));
     heartInactive = loadImage(dataPath("Lives\\HeartInactive.png"));
     heartActive.resize(heartSize,heartSize);
     heartInactive.resize(heartSize,heartSize);
-    
-    for(int i = 0; i < asteroidCount; i++)
-    {
-      asteroidList.add(new Asteroid());
-    }
 
     player = new Ship(3);
   }
   
   void OnUpdate()
   {
+    WaveUpate();
+    
     player.OnUpdate();
+    
+    println(asteroidList.size());
+    
+    if(player.m_currentHealth <= 0)
+    {
+     //dead 
+    }
     
     for(int i = 0; i < asteroidList.size(); i++)
     {
@@ -46,7 +55,6 @@ class Game
     }
   }
 
-  
   void OnDraw()
   {
     player.OnDraw();
@@ -58,6 +66,39 @@ class Game
     
     DrawScore();
     DrawLives();
+  }
+  
+  void WaveUpate()
+  {
+   if(!startWave)
+   {
+     splashEnabled = true;  
+     timeOnSplash = millis();
+     startWave = true;
+     return;
+   }
+   
+   if(splashEnabled && (millis() - timeOnSplash) / 1000 < splashCooldown) //<>//
+   {
+     textAlign(CENTER,CENTER);
+     text("Wave: " + str(currentWave), width / 2, height / 4);
+     return;
+   }
+   else if(splashEnabled && (millis() - timeOnSplash) / 1000 > splashCooldown)
+   {
+     for(int i = 0; i < asteroidsPerWave * currentWave; i++)
+     {
+       asteroidList.add(new Asteroid());
+     }
+     splashEnabled = false;
+     return;
+   }
+   
+   if(asteroidList.size() == 0)
+   {
+     startWave = false;
+     currentWave++;
+   }
   }
   
   void AsteroidCollision(Asteroid rock)
@@ -79,27 +120,36 @@ class Game
         rock.m_flagToDestroy = true;
       }
     }
-    
+         
     // detects if the player has collided with the rock and will only minus a life
     // on entry of an asteroid
-    if(!beenHit && rock.m_position.x + rock.m_asteroidImage.width > (player.m_location.x + width/2) &&
-                   rock.m_position.x - rock.m_asteroidImage.width < (player.m_location.x + width/2 -player.playerShip.width/2) &&
-                   rock.m_position.y + rock.m_asteroidImage.height > (player.m_location.y + height/2) &&
-                   rock.m_position.y - rock.m_asteroidImage.height < (player.m_location.y + width/2 -player.playerShip.width/2))  
-       {
-         if(rock.m_isPlayerOn)
-         {
-           return;
-         }
-         
-         beenHit = true;
-         rock.m_isPlayerOn = true;
-         player.m_currentHealth--;
-       }
-       else
-       {
-         beenHit = false;
-       }
+   if(!beenHit && dist((player.m_location.x + width/2),
+                      (player.m_location.y + height/2),
+                      (rock.m_position.x + rock.m_asteroidImage.width/2),
+                      (rock.m_position.y + rock.m_asteroidImage.height/2)) <
+                      (rock.m_asteroidImage.width/2 + player.playerShip.width/2))
+   {
+     if(rock.m_isPlayerOn)
+     {
+       return;
+     }
+     
+     beenHit = true;
+     rock.m_isPlayerOn = true;
+     player.m_currentHealth--;
+   }
+   else
+   {
+       beenHit = false;
+   }
+   
+   if(debugLines)
+   {
+     line((player.m_location.x + width/2),
+          (player.m_location.y + height/2),
+          (rock.m_position.x + rock.m_asteroidImage.width/2), 
+          (rock.m_position.y + rock.m_asteroidImage.height/2));
+   }
   }
 
   // draws the player's lives

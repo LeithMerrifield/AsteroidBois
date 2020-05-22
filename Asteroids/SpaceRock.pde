@@ -45,32 +45,30 @@ class Asteroid
       Movement();
       
       if((m_position.x > 0 && m_position.x < width) && (m_position.y > 0 && m_position.y < height))
+      {
         m_wrapRock = true;
+      }
       
       if(m_wrapRock)
+      {
         ScreenWrap();
+      }
     }
   }
 
   void OnDraw()
   {    
     image(m_asteroidImage,m_position.x,m_position.y);
-    stroke(255);
     
-    if(asteroidHitBox)
+    if(debugLines)
     {
+      stroke(255);
       line(m_position.x,m_position.y,m_position.x + m_asteroidImage.width,m_position.y); //<>//
       line(m_position.x + m_asteroidImage.width,m_position.y,m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height);
       line(m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height,m_position.x,m_position.y + m_asteroidImage.height);
       line(m_position.x,m_position.y + m_asteroidImage.height,m_position.x,m_position.y);
     }
   }
-  
-  void RockSplit()
-  {
-    
-  }
-  
   void ScreenWrap()
   {
     if(m_position.x > width + m_asteroidImage.width) 

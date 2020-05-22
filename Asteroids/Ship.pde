@@ -94,14 +94,6 @@ class Ship
       image(playerShip, -playerShip.width/2, -playerShip.height/2);
     }
 
-    /*
-    // should be the bounds of the ship
-    line(m_location.x - playerShip.width / 2 ,m_location.y - playerShip.height / 2 ,m_location.x + playerShip.width / 2, m_location.y - playerShip.height / 2);
-    line(m_location.x + playerShip.width / 2 ,m_location.y - playerShip.height / 2 ,m_location.x + playerShip.width / 2, m_location.y + playerShip.height / 2);
-    line(m_location.x + playerShip.width / 2 ,m_location.y + playerShip.height / 2 ,m_location.x - playerShip.width / 2, m_location.y + playerShip.height / 2);
-    line(m_location.x - playerShip.width / 2 ,m_location.y + playerShip.height / 2 ,m_location.x - playerShip.width / 2, m_location.y - playerShip.height / 2);
-    */
-
     popMatrix();
     
     m_velocity.add(m_accelaration);
