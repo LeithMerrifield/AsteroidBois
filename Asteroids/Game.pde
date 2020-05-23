@@ -10,7 +10,7 @@ class Game
   PImage heartActive;
   PImage heartInactive;
   int heartSize = 50;
-  
+  int fuelIncrease = 50;
   boolean beenHit = false;
   
   int currentWave = 1;
@@ -31,18 +31,19 @@ class Game
   }
   
   void OnUpdate()
-  {
+  {            
     WaveUpate();
-    
-    player.OnUpdate();
-    
-    println(asteroidList.size());
     
     if(player.m_currentHealth <= 0)
     {
-     //dead 
+     textAlign(CENTER,CENTER);
+     text("Game Over", width / 2, height / 2);
     }
-    
+    else
+    {
+      player.OnUpdate();
+    }
+
     for(int i = 0; i < asteroidList.size(); i++)
     {
       Asteroid rock = asteroidList.get(i);
@@ -57,8 +58,10 @@ class Game
 
   void OnDraw()
   {
-    player.OnDraw();
-    
+    if(player.m_currentHealth > 0)
+    {
+      player.OnDraw();
+    }
     for(Asteroid rock : asteroidList)
     {
       rock.OnDraw();
@@ -103,11 +106,15 @@ class Game
   
   void AsteroidCollision(Asteroid rock)
   {
-    
     // increments score and splits asteroids
     if(rock.CheckBulletCollision(player.m_bullets))
     {
       score++;
+      if(player.m_currentFuel < player.m_maxFuel)
+      {
+        player.m_currentFuel += fuelIncrease;
+      }
+      
       if(rock.m_asteroidImage.width > rock.m_minSize)
       {
         int newSize = rock.m_asteroidImage.width / 2;
@@ -171,6 +178,6 @@ class Game
   void DrawScore()
   {
     fill(255);
-    text("Score: " + str(score), width - 350, 50);
+    text("Score: " + str(score), width - 150, 30);
   }
 }

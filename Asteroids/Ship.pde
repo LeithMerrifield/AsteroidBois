@@ -1,7 +1,7 @@
 class Ship
 {
   int m_currentHealth, m_maxHealth;
-  int fuel;
+  int m_currentFuel,m_maxFuel;
   PImage playerShip, playerShipThrust;
   PVector m_location, m_velocity, m_accelaration;
   float m_rotation, m_rotation_speed, m_thrust_force;
@@ -19,7 +19,8 @@ class Ship
     m_rotation = 0;
     m_rotation_speed = 0.05;
     m_thrust_force = 0.07;
-    fuel = 1000;
+    m_maxFuel = 1000;
+    m_currentFuel = m_maxFuel;
     m_currentHealth = health;
     m_maxHealth = health;
   }
@@ -34,19 +35,19 @@ class Ship
     }
     
     // accelarates the rocket in the direction its facing if w is held
-    if(W_held && fuel > 0) {
+    if(W_held && m_currentFuel > 0) {
       m_accelaration.x = m_thrust_force*sin(m_rotation);
       m_accelaration.y = -m_thrust_force*cos(m_rotation);
-      fuel -= 1;
+      m_currentFuel -= 1;
     } else {
       m_accelaration.x = 0;
       m_accelaration.y = 0;
     }
     
-    if(W_held && !thrusterSound.isPlaying() && fuel > 0) {
+    if(W_held && !thrusterSound.isPlaying() && m_currentFuel > 0) {
       thrusterSound.play();
     }
-    if(!W_held || fuel == 0) {
+    if(!W_held || m_currentFuel == 0) {
       thrusterSound.stop();
     }
     
@@ -88,7 +89,7 @@ class Ship
     }
     translate(m_location.x+width/2, m_location.y+height/2);
     rotate(m_rotation);
-    if(W_held && fuel > 0) {
+    if(W_held && m_currentFuel > 0) {
       image(playerShipThrust, -playerShip.width/2, -playerShip.height/2);
     } else {
       image(playerShip, -playerShip.width/2, -playerShip.height/2);
@@ -98,8 +99,8 @@ class Ship
     
     m_velocity.add(m_accelaration);
     m_location.add(m_velocity);
-    fill(255- fuel*255/1000, fuel*255/1000, 0); 
-    rect(10, 10, fuel/2, 10);
+    fill(255- m_currentFuel*255/1000, m_currentFuel*255/1000, 0); 
+    rect(10, 10, m_currentFuel/2, 10);
     fill(255,255,255);
   }
 }

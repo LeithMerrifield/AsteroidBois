@@ -63,7 +63,7 @@ class Asteroid
     if(debugLines)
     {
       stroke(255);
-      line(m_position.x,m_position.y,m_position.x + m_asteroidImage.width,m_position.y); //<>//
+      line(m_position.x,m_position.y,m_position.x + m_asteroidImage.width,m_position.y); //<>// //<>//
       line(m_position.x + m_asteroidImage.width,m_position.y,m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height);
       line(m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height,m_position.x,m_position.y + m_asteroidImage.height);
       line(m_position.x,m_position.y + m_asteroidImage.height,m_position.x,m_position.y);
