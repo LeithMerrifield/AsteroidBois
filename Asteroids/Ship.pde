@@ -1,3 +1,8 @@
+/*
+  Auther: Nathan, Harrison Liddell, Leith Merrifield 
+  Description: Class for each projectile
+*/
+
 class Ship
 {
   int m_currentHealth, m_maxHealth;
@@ -26,40 +31,51 @@ class Ship
   }
   
   // changes the rotation and accelaration with key inputs.
-  void OnUpdate() {
-    if(A_held) { 
+  void OnUpdate() 
+  {
+    if(A_held) 
+    { 
       m_rotation -= m_rotation_speed;
     }
-    if(D_held) { 
+    if(D_held) 
+    { 
       m_rotation += m_rotation_speed;
     }
     
     // accelarates the rocket in the direction its facing if w is held
-    if(W_held && m_currentFuel > 0) {
+    if(W_held && m_currentFuel > 0) 
+    {
       m_accelaration.x = m_thrust_force*sin(m_rotation);
       m_accelaration.y = -m_thrust_force*cos(m_rotation);
       m_currentFuel -= 1;
-    } else {
+    } 
+    else 
+    {
       m_accelaration.x = 0;
       m_accelaration.y = 0;
     }
     
-    if(W_held && !thrusterSound.isPlaying() && m_currentFuel > 0) {
+    if(W_held && !thrusterSound.isPlaying() && m_currentFuel > 0) 
+    {
       thrusterSound.play();
     }
-    if(!W_held || m_currentFuel == 0) {
+    if(!W_held || m_currentFuel == 0) 
+    {
       thrusterSound.stop();
     }
     
-    if(Space_held && !GunFire.isPlaying()) {
+    if(Space_held && !GunFire.isPlaying()) 
+    {
       GunFire.play();
       m_bullets.add(new Projectile(m_location.x,m_location.y,m_rotation));
     }
     // these loop the player around to the other side of the screen if they hit a side.
-    if(abs(m_location.x) > (playerShip.width + width)/2) {
+    if(abs(m_location.x) > (playerShip.width + width)/2) 
+    {
       m_location.x = -m_location.x;
     }
-    if(abs(m_location.y) > (playerShip.width + height)/2) {
+    if(abs(m_location.y) > (playerShip.width + height)/2) 
+    {
       m_location.y = -m_location.y;
     }
     
@@ -75,13 +91,15 @@ class Ship
       {
         bullet.m_flagToDestroy = true;
       }
-      if(bullet.m_flagToDestroy) {
+      if(bullet.m_flagToDestroy) 
+      {
         m_bullets.remove(i);
       }
     }
   }
   
-  void OnDraw() { // the pushing and popping of matrix allows it to rotate around the rocket.
+  void OnDraw() 
+  { // the pushing and popping of matrix allows it to rotate around the rocket.
     pushMatrix();
     for(Projectile bullet : m_bullets)
     {
@@ -89,9 +107,12 @@ class Ship
     }
     translate(m_location.x+width/2, m_location.y+height/2);
     rotate(m_rotation);
-    if(W_held && m_currentFuel > 0) {
+    if(W_held && m_currentFuel > 0) 
+    {
       image(playerShipThrust, -playerShip.width/2, -playerShip.height/2);
-    } else {
+    }
+    else 
+    {
       image(playerShip, -playerShip.width/2, -playerShip.height/2);
     }
 

@@ -1,3 +1,8 @@
+/*
+  Auther: Harrison Liddell
+  Description: Main file for the menu state
+*/
+
 class Menu
 {
   
@@ -321,14 +326,14 @@ class Menu
         
       selected-=1;
         
-    print(selected);
+    //print(selected);
     return;
     }
     
     else if(S_held)
     {
         selected+=1;
-    print(selected);
+    //print(selected);
     return;
     }
   }

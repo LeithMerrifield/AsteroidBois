@@ -21,9 +21,9 @@ boolean debugLines = false;
 void setup()
 {
   //Fram.setResizable allows us to resize the screen later.
-  //fullScreen();
+  fullScreen();
   textSize(50);
-  size(900,900);
+  //size(900,900);
   surface.setResizable(true);
   game = new Game();
   menu = new Menu();
@@ -42,7 +42,6 @@ void setup()
   volume = new Sound(this);
   projectiley = new IntList();
   projectilex = new IntList();
-  
   volume.volume(0.1);
 }
 
@@ -62,23 +61,27 @@ void draw()
 }
 
 void keyPressed() {
-    if(key == 'a' || key == 'A') {
+    if(key == 'a' || key == 'A')
+    {
       A_held = true;
     }
-    if(key == 'd' || key == 'D') {
+    if(key == 'd' || key == 'D')
+    {
       D_held = true;
     }
-    if(key == 'w' || key == 'W') {
-      W_held = true;
-      
+    if(key == 'w' || key == 'W')
+    {
+      W_held = true;  
     }
     if(key == 's' || key == 'S')
     {
       S_held = true;  
     }
-    if(key == ' ') {
+    if(key == ' ')
+    {
       Space_held = true;
     }
+    
     if(key == ESC)
     {
       key = 0;
@@ -91,22 +94,25 @@ void keyPressed() {
     }
 }
 void keyReleased() {
-    if(key == 'a' || key == 'A') {
+    if(key == 'a' || key == 'A')
+    {
       A_held = false;
     }
-    if(key == 'd' || key == 'D') {
+    if(key == 'd' || key == 'D')
+    {
       D_held = false;
     }
-    if(key == 'w' || key == 'W') {
+    if(key == 'w' || key == 'W')
+    {
       W_held = false;
-     
     }
     if(key =='s' || key =='S')
     {
       S_held = false;
       
     }
-    if(key == ' ') {
+    if(key == ' ')
+    {
       Space_held = false;
     }
 }

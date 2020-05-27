@@ -1,3 +1,8 @@
+/*
+  Auther: Leith Merrifield 
+  Description: Class for each Asteroid
+*/
+
 class Asteroid
 {
   int m_minSize = 50;
@@ -9,11 +14,14 @@ class Asteroid
   PVector m_velocity = new PVector();
   
   boolean m_wrapRock = false;
-  float m_speed = .6f;
+  float m_speed = .7f;
   PImage m_asteroidImage;
   boolean m_flagToDestroy = false;
   boolean m_isPlayerOn = false;
   
+  boolean m_skip = false;
+  
+  // basic constructor that picks a random image from the directory
   public Asteroid()
   {
     File folder = new File(dataPath("Rocks\\"));
@@ -29,6 +37,7 @@ class Asteroid
     GetDirection();
   }
   
+  // constructor override that copies the properties of an existing asteroid
   public Asteroid(float speed, int size, PImage image,PVector position)
   {
     m_asteroidImage = new PImage(image.getImage());
@@ -36,6 +45,7 @@ class Asteroid
     m_asteroidImage.resize(size,size);
     m_speed = speed;
     RandomDirection();
+    m_skip = true;
   }
   
   void OnUpdate()
@@ -43,7 +53,8 @@ class Asteroid
     if(isPlaying)
     {
       Movement();
-      
+       
+      // used so that the asteroids can travel into the screen before wrapping
       if((m_position.x > 0 && m_position.x < width) && (m_position.y > 0 && m_position.y < height))
       {
         m_wrapRock = true;
@@ -58,17 +69,20 @@ class Asteroid
 
   void OnDraw()
   {    
+    
     image(m_asteroidImage,m_position.x,m_position.y);
     
     if(debugLines)
     {
       stroke(255);
-      line(m_position.x,m_position.y,m_position.x + m_asteroidImage.width,m_position.y); //<>// //<>//
+      line(m_position.x,m_position.y,m_position.x + m_asteroidImage.width,m_position.y);
       line(m_position.x + m_asteroidImage.width,m_position.y,m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height);
       line(m_position.x + m_asteroidImage.width,m_position.y + m_asteroidImage.height,m_position.x,m_position.y + m_asteroidImage.height);
       line(m_position.x,m_position.y + m_asteroidImage.height,m_position.x,m_position.y);
     }
   }
+  
+  // if an asteroid travels off screen than transfer it to the other side
   void ScreenWrap()
   {
     if(m_position.x > width + m_asteroidImage.width) 
@@ -89,6 +103,7 @@ class Asteroid
     }
   }
   
+  // basic movement
   void Movement()
   {
     m_velocity.add(m_direction);
@@ -120,6 +135,8 @@ class Asteroid
    }
   }
   
+  // creates a direction based on current direction
+  // somewhat random
   void GetDirection()
   {
     if(m_position.x > width)
@@ -146,6 +163,7 @@ class Asteroid
     m_direction.normalize();
   }
   
+  // creates a random direction around the rock
   void RandomDirection()
   {
     m_direction.x = random(0,width);
@@ -154,6 +172,7 @@ class Asteroid
     m_direction.normalize();
   }
   
+  // used to check if the passed in bulletlist collides with any rock
   boolean CheckBulletCollision(ArrayList<Projectile> bulletList)
   {
     for(Projectile bullet : bulletList)

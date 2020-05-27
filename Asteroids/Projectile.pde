@@ -1,3 +1,8 @@
+/*
+  Auther: Leith Merrifield 
+  Description: Class for each projectile
+*/
+
 class Projectile 
 {
   PVector m_position = new PVector();

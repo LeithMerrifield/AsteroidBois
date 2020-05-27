@@ -1,3 +1,8 @@
+/*
+  Auther: Leith Merrifield 
+  Description: Main file for the game state
+*/
+
 boolean isPlaying = true;
 
 class Game
@@ -30,6 +35,7 @@ class Game
     player = new Ship(3);
   }
   
+  // Updates player/rocks movement and collision before drawing
   void OnUpdate()
   {            
     WaveUpate();
@@ -44,6 +50,7 @@ class Game
       player.OnUpdate();
     }
 
+    // checks collision between rocks/projects/player
     for(int i = 0; i < asteroidList.size(); i++)
     {
       Asteroid rock = asteroidList.get(i);
@@ -71,8 +78,10 @@ class Game
     DrawLives();
   }
   
+  //checks acts on the current state of the wave
   void WaveUpate()
   {
+    //if startWave is flagged then enable splash and start the cooldown
    if(!startWave)
    {
      splashEnabled = true;  
@@ -81,7 +90,8 @@ class Game
      return;
    }
    
-   if(splashEnabled && (millis() - timeOnSplash) / 1000 < splashCooldown) //<>//
+   // Draws the "Wave" text whilst cooldown hasnt been reached
+   if(splashEnabled && (millis() - timeOnSplash) / 1000 < splashCooldown)
    {
      textAlign(CENTER,CENTER);
      text("Wave: " + str(currentWave), width / 2, height / 4);
@@ -89,6 +99,7 @@ class Game
    }
    else if(splashEnabled && (millis() - timeOnSplash) / 1000 > splashCooldown)
    {
+     // spawns asteroids and disables splash screen
      for(int i = 0; i < asteroidsPerWave * currentWave; i++)
      {
        asteroidList.add(new Asteroid());
@@ -97,15 +108,24 @@ class Game
      return;
    }
    
-   if(asteroidList.size() == 0)
+   // if there are no asteroids than increment wave and enable startWave
+   if(asteroidList.size() == 0 && !splashEnabled)
    {
      startWave = false;
      currentWave++;
    }
   }
   
+  // for every rock check if a bullet is colliding
+  // it will break apart under the right conditions
   void AsteroidCollision(Asteroid rock)
   {
+    if(rock.m_skip)
+    {
+      rock.m_skip = false;
+      return;
+    }
+    
     // increments score and splits asteroids
     if(rock.CheckBulletCollision(player.m_bullets))
     {
@@ -121,6 +141,7 @@ class Game
         asteroidList.add(new Asteroid(rock.m_speed, newSize,rock.m_asteroidImage,rock.m_position));
         rock.m_asteroidImage.resize(newSize, newSize);
         rock.RandomDirection();
+        rock.m_skip = true;
       }
       else
       {
