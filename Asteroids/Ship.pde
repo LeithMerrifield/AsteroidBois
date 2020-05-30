@@ -69,6 +69,7 @@ class Ship
       GunFire.play();
       m_bullets.add(new Projectile(m_location.x,m_location.y,m_rotation));
     }
+    
     // these loop the player around to the other side of the screen if they hit a side.
     if(abs(m_location.x) > (playerShip.width + width)/2) 
     {
@@ -120,8 +121,8 @@ class Ship
     
     m_velocity.add(m_accelaration);
     m_location.add(m_velocity);
-    fill(255- m_currentFuel*255/1000, m_currentFuel*255/1000, 0); 
-    rect(10, 10, m_currentFuel/2, 10);
+    fill(255 - m_currentFuel * 255 / 1000, m_currentFuel * 255 / 1000, 0); 
+    rect(10, 10, m_currentFuel / 2, 10);
     fill(255,255,255);
   }
 }

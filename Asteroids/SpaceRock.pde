@@ -27,7 +27,6 @@ class Asteroid
     File folder = new File(dataPath("Rocks\\"));
     String[] filenames = folder.list();
     String path = filenames[(int)random(0,filenames.length)];
-    //String path = filenames[filenames.length - 1];
     PImage newRock = loadImage(dataPath("Rocks\\" + path));
     int size = (int)random(m_minSize,m_maxSize);
     

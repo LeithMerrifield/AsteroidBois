@@ -12,18 +12,15 @@ SoundFile RockHit3;
 SoundFile GunFire;
 Sound volume;
 
-
-IntList projectiley;
-IntList projectilex;
 boolean W_held, A_held, D_held, S_held, Space_held;
 boolean debugLines = false;
 
 void setup()
 {
   //Fram.setResizable allows us to resize the screen later.
-  fullScreen();
+  //fullScreen();
   textSize(50);
-  //size(900,900);
+  size(900,900);
   surface.setResizable(true);
   game = new Game();
   menu = new Menu();
@@ -40,8 +37,6 @@ void setup()
   PlayerDie2 = new SoundFile(this, dataPath("Sounds\\PlayerDie1.wav"));
   GunFire = new SoundFile(this, dataPath("Sounds\\GunFire.wav"));
   volume = new Sound(this);
-  projectiley = new IntList();
-  projectilex = new IntList();
   volume.volume(0.1);
 }
 

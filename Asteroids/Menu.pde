@@ -17,13 +17,14 @@ class Menu
     menuState = 0;
     //keyDelayTime is the delay between keypresses
     keyDelayTime = 75;
- 
   }
   
   void OnUpdate()
   {
     if(W_held || S_held)
+    {
       changeSelection();
+    }
   }
   
   void OnDraw()
@@ -47,8 +48,8 @@ class Menu
         selectVolumeItem(selected);
         break;
       case 3:
-      drawCredits();
-    
+        drawCredits();
+        break;
     }
   }
   
@@ -56,13 +57,13 @@ class Menu
   void drawMainMenu()
   {
     textAlign(CENTER,CENTER);
-      fill(255);
-      textSize(30);
-      text("Resume", width/2, height*0.4);
-      text("Screen Size", width/2, height*0.5);
-      text("Volume", width/2, height*0.6);
-      text("Credits", width/2, height*0.7);
-      text("Exit", width/2, height*0.8);
+    fill(255);
+    textSize(30);
+    text("Resume", width/2, height*0.4);
+    text("Screen Size", width/2, height*0.5);
+    text("Volume", width/2, height*0.6);
+    text("Credits", width/2, height*0.7);
+    text("Exit", width/2, height*0.8);
   }
   
    //This function shows which menu item is selected and processes its selection
@@ -104,7 +105,7 @@ class Menu
         delay(keyDelayTime);
         break;
       
-       case 3:
+     case 3:
        fill(255,255,0);
        text("Credits", width/2, height*0.7);
        flashRectangle(0.7);
@@ -114,7 +115,6 @@ class Menu
        break;    
        
       case 4:
-
        fill(255,255,0);
        text("Exit", width/2, height*0.8);
        flashRectangle(0.8);
@@ -168,7 +168,7 @@ class Menu
        delay(keyDelayTime);
        break;
        
-       case 2:
+     case 2:
        fill(255,255,0);
        text("750,750", width/2, height*0.6);
        flashRectangle(0.6);
@@ -182,7 +182,7 @@ class Menu
        delay(keyDelayTime);
        break;
        
-       case 3:
+     case 3:
        fill(255,255,0);
        text("1000,1000", width/2, height*0.7);
        flashRectangle(0.7);
@@ -269,7 +269,7 @@ class Menu
        delay(keyDelayTime);
        break;
        
-       case 3:
+     case 3:
        fill(255,255,0);
        text("Medium", width/2, height*0.7);
        flashRectangle(0.7);
@@ -282,7 +282,7 @@ class Menu
        delay(keyDelayTime);
        break;
        
-       case 4:
+     case 4:
        fill(255,255,0);
        text("High", width/2, height*0.8);
        flashRectangle(0.8);
@@ -315,42 +315,34 @@ class Menu
      }
   }
   
- 
  //This function is used to change what the menyu is currently hgihlighting
  void changeSelection()
   {
     if(W_held)
     {
       if(selected == 0)
+      {
         selected = 5;
+      }
         
       selected-=1;
-        
-    //print(selected);
-    return;
     }
-    
     else if(S_held)
     {
         selected+=1;
-    //print(selected);
-    return;
     }
   }
-  
   
   //This function creates a rectangular box around the height its given (i)
   void flashRectangle(float i)
   {
-    if(millis()%250 <= 125)
-        {
-          rectMode(CENTER);
-          fill(255,0);
-          rect(width/2,height*i,200,60);
-          fill(255,0);
-          rect(width/2, height*i,195,55);
-        }
+    if(millis() % 500 <= 250)
+    {
+      rectMode(CENTER);
+      fill(255);
+      rect(width / 2,height * i,200,60);
+      fill(255);
+      rect(width / 2, height * i,195,55);
+    }
   }
-
-
 }
