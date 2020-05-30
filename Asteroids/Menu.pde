@@ -1,5 +1,5 @@
 /*
-  Auther: Harrison Liddell
+  Author: Harrison Liddell
   Description: Main file for the menu state
 */
 

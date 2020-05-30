@@ -1,5 +1,5 @@
 /*
-  Auther: Leith Merrifield 
+  Author: Leith Merrifield 
   Description: Class for each Asteroid
 */
 

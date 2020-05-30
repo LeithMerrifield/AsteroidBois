@@ -1,5 +1,5 @@
 /*
-  Auther: Leith Merrifield 
+  Author: Leith Merrifield 
   Description: Main file for the game state
 */
 

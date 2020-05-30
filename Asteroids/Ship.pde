@@ -1,5 +1,5 @@
 /*
-  Auther: Nathan, Harrison Liddell, Leith Merrifield 
+  Author: Nathan Edmonds, Harrison Liddell, Leith Merrifield 
   Description: Class for each projectile
 */
 
